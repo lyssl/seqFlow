@@ -7,7 +7,7 @@ import com.base.seqflow.jdbc.IdSegmentRepository;
 import com.base.seqflow.jdbc.JdbcIdSegmentRepository;
 
 
-import com.base.seqflow.service.SeqFlow;
+import com.base.seqflow.core.SeqFlow;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;

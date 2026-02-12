@@ -1,9 +1,7 @@
-package com.base.seqflow.service;
+package com.base.seqflow.core;
 
 
-import com.base.seqflow.core.IdSegmentManager;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -47,28 +45,31 @@ public class SeqFlow {
     public static String nextBizNo(String bizTag, Integer formatLen) {
         checkBean();
         String yyyyMMdd = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        long l = segmentManager.nextId(bizTag);
+        String dailyBizTag = bizTag + yyyyMMdd;
+        long l = segmentManager.nextId(dailyBizTag);
         if (formatLen == null) {
             return String.valueOf(l);
         }
-        return bizTag + yyyyMMdd + String.format("%0" + formatLen + "d", l);
+        return dailyBizTag + String.format("%0" + formatLen + "d", l);
     }
 
     public static String nextBizNo(String bizTag) {
         checkBean();
         String yyyyMMdd = new SimpleDateFormat("yyyyMMdd").format(new Date());
-        long l = segmentManager.nextId(bizTag);
-        return bizTag + yyyyMMdd + String.format("%04d", l);
+        String dailyBizTag = bizTag + yyyyMMdd;
+        long l = segmentManager.nextId(dailyBizTag);
+        return dailyBizTag+ String.format("%04d", l);
     }
 
     public static String nextBizNo(String bizTag, String dateFormat, Integer formatLen) {
         checkBean();
         String yyyyMMdd = new SimpleDateFormat(dateFormat).format(new Date());
-        long l = segmentManager.nextId(bizTag);
+        String dailyBizTag = bizTag + yyyyMMdd;
+        long l = segmentManager.nextId(dailyBizTag);
         if (formatLen == null) {
             return String.valueOf(l);
         }
-        return bizTag + yyyyMMdd + String.format("%0" + formatLen + "d", l);
+        return dailyBizTag + String.format("%0" + formatLen + "d", l);
     }
 
 
