@@ -57,10 +57,10 @@ long id = SeqFlow.nextId("order");
 // 生成指定长度的纯数字 ID（不足前面补0）
 String formattedId = SeqFlow.nextId("order", 12);
 
-// 生成纯业务编号（无日期前缀）
+// 生成业务编号时间默认取yyyyMMdd 例子: order202002130001
 String bizNo = SeqFlow.nextBizNo("order");
 
-// 生成带日期前缀的业务编号
+// 生成指定日期前缀的业务编号
 String dateBizNo = SeqFlow.nextBizNo("order", "yyyyMMdd");
 
 // 生成指定长度的纯业务编号
@@ -114,4 +114,4 @@ SeqFlow 采用经典的号段模式实现分布式 ID 生成：
 
 ## 许可证
 
-本项目采用 MIT 许可证开源。
+本项目采用 Apache2.0 许可证开源。
