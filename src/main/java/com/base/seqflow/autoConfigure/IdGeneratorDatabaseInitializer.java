@@ -38,10 +38,8 @@ public class IdGeneratorDatabaseInitializer {
 
     private boolean tableExists(String tableName) {
         try {
-            // 使用 JdbcTemplate 查询数据库元数据
             return Boolean.TRUE.equals(jdbcTemplate.execute((java.sql.Connection connection) -> {
                 DatabaseMetaData metaData = connection.getMetaData();
-                // 对于 MySQL，需要处理表名大小写
                 try (ResultSet rs = metaData.getTables(
                         connection.getCatalog(),
                         null,

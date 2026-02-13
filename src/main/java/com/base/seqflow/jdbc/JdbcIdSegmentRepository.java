@@ -27,7 +27,7 @@ public class JdbcIdSegmentRepository implements IdSegmentRepository {
         try {
             return jdbcTemplate.queryForObject(sql, Long.class, bizTag);
         } catch (Exception e) {
-            return null;  // 记录不存在返回null
+            return null;
         }
     }
 
