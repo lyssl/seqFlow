@@ -18,8 +18,8 @@ SeqFlow 是一个基于号段模式的分布式 ID 生成器，专为 Spring Boo
 
 ```xml
 <dependency>
-    <groupId>com.base</groupId>
-    <artifactId>seq-flow</artifactId>
+    <groupId>io.github.lyssl</groupId>
+    <artifactId>seqFlow</artifactId>
     <version>最新版本</version>
 </dependency>
 ```
