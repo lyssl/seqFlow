@@ -30,34 +30,30 @@ public class IdSegmentManager {
 
         while (true) {
             IdSegment currentSeg = buffer.getCurrent();
-            if (currentSeg.isOver()) {
-                if (!currentSeg.isLoading()) {
-                    lock.lock();
-                    try {
-                        if (!currentSeg.isLoading()) {
-                            currentSeg.setLoading(true);
-                            long newMax = allocator.allocate(bizTag, idGeneratorProperties.getStep());
-                            IdSegment nextSeg = new IdSegment(currentSeg.getMax(), newMax);
-                            buffer.setNext(nextSeg);
-                            buffer.switchPos();
-                            currentSeg.setLoading(false);
-                            log.info("Switched segment for {}: [{}, {})", bizTag, nextSeg.getCurrent(), nextSeg.getMax());
-                        }
-                    } finally {
-                        lock.unlock();
-                    }
-                } else {
-                    Thread.yield();
-                    continue;
-                }
-            }
-
             synchronized (currentSeg) {
                 if (currentSeg.getCurrent() < currentSeg.getMax()) {
                     long id = currentSeg.getCurrent() + 1;
                     currentSeg.setCurrent(id);
                     return id;
                 }
+            }
+
+            lock.lock();
+            try {
+                IdSegment latestSeg = buffer.getCurrent();
+                synchronized (latestSeg) {
+                    if (latestSeg.getCurrent() < latestSeg.getMax()) {
+                        continue;
+                    }
+                }
+
+                long newMax = allocator.allocate(bizTag, idGeneratorProperties.getStep());
+                IdSegment nextSeg = new IdSegment(latestSeg.getMax(), newMax);
+                buffer.setNext(nextSeg);
+                buffer.switchPos();
+                log.info("Switched segment for {}: [{}, {})", bizTag, nextSeg.getCurrent(), nextSeg.getMax());
+            } finally {
+                lock.unlock();
             }
         }
     }

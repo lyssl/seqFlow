@@ -74,6 +74,26 @@ Load the new segment into memory and continue generating IDs
 
 The core idea is segment pre-allocation. For example, when `step = 100`, SeqFlow requests 100 continuous IDs from the database for a specific `bizTag`. The application then allocates those IDs locally from memory. The database is accessed again only when the current segment is exhausted.
 
+## Benchmark
+
+The following benchmark was run in a local environment and is for reference only. Actual performance depends on CPU, JDK, database, network, connection pool, and the configured `step`.
+
+Test conditions:
+
+- Threads: 100
+- Total IDs: 1,000,000
+- ID uniqueness check: enabled
+- Duplicate IDs: 0
+- Failed requests: 0
+
+| step | DB segment loads | elapsed | TPS | success | unique | duplicate |
+| ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| 100 | 10,000 | 118.335s | 8,450.60/s | 1,000,000 | 1,000,000 | 0 |
+| 1,000 | 1,000 | 14.563s | 68,666.14/s | 1,000,000 | 1,000,000 | 0 |
+| 10,000 | 100 | 2.273s | 439,901.49/s | 1,000,000 | 1,000,000 | 0 |
+
+The result shows that a larger `step` reduces database segment allocation frequency and improves throughput. In production, choose `step` based on concurrency, acceptable segment waste, and database pressure.
+
 ## Quick Start
 
 ### Add Dependency
