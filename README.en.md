@@ -19,7 +19,7 @@ SeqFlow uses the database segment allocation pattern. It allocates a batch of ID
 
 ## Unsuitable Use Cases
 
-- Extremely high-concurrency scenarios where database dependency is unacceptable
+- database dependency is unacceptable
 - Scenarios that require a Snowflake-style ID structure
 - Scenarios that require perfectly continuous IDs and cannot tolerate segment waste
 - Pure local ID generation without a database coordination table
@@ -102,7 +102,7 @@ The result shows that a larger `step` reduces database segment allocation freque
 <dependency>
     <groupId>io.github.lyssl</groupId>
     <artifactId>seqFlow</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
